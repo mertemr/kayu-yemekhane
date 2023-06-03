@@ -1,0 +1,22 @@
+<% for (let i = 0; i < array.length; i++) { %>
+    <div class="container">
+        <h3 id="menü-isim"><%= array[i].isim %></h3>
+        <% if (array[i].hata) { %>
+            <p class="uyari"><%= array[i].hata %></p>
+            </div>
+        <% continue; %> <% } else { %>
+            <div id="liste">
+                <% for( let j = 0; j < array[i].veri.length; j++) { %>
+                <div id="items">
+                <h4 id="tarih"><%= array[i].veri[j].tarih %></h4>
+                <ul id="yemekler">
+                <% for (let k = 0; k < array[i].veri[j].yemekler.length; k++) { %>
+                    <li id="item"><%= array[i].veri[j].yemekler[k] %></li>
+                <% } %>
+                </div>
+                </ul>
+            <% } %>
+        </div>
+        <% } %>
+    </div>
+<% } %>
