@@ -16,6 +16,9 @@ app.engine('html', require('ejs').renderFile);
 
 const publicPath = path.resolve(__dirname, 'public');
 
+const api_ip   = process.env.API_IP   || "localhost";
+const api_port = process.env.API_PORT || 8080;
+
 app.get('/css/:file', (req, res) => {
     res.sendFile(publicPath + "/css/" + req.params.file);
 });
@@ -25,19 +28,22 @@ app.get('/js/:file', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    http.get('http://localhost:8080/menu', (response) => {
-        let data = '';
-        response.on('data', (chunk) => {
+    http.get(`http://${api_ip}:${api_port}/menu`, (response) => {
+        let data = "";
+        response.on("data", (chunk) => {
             data += chunk;
         });
-        response.on('end', () => {
+        response.on("end", () => {
             res.render("index", { array: JSON.parse(data) });
         });
-    }).on('error', (err) => {
-        console.log('Error: ' + err.message);
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
     });
 });
 
-app.listen(80, () => {
-    console.log('App running on http://127.0.0.1:80');
+const PORT = process.env.PORT || 80;
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+    console.log(`Server running on ${HOST}:${PORT}`);
 });
