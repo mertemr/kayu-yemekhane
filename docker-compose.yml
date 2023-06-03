@@ -1,0 +1,26 @@
+version: '3'
+services:
+  nodejs:
+    build:
+      context: ./web
+    ports:
+      - 80:80
+    networks:
+      - default
+    environment:
+      - NODE_ENV=production
+      - API_IP=fastapi
+      - API_PORT=8080
+  fastapi:
+    build:
+      context: ./yemekhane
+    ports:
+      - 8080:8080
+    networks:
+      - default
+    environment:
+      - PYTHONUNBUFFERED=1
+networks:
+  default:
+    name: yemekhane
+    driver: bridge
